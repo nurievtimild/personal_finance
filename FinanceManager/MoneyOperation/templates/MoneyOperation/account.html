@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ acc.account_name }}</h1>
+<ul>
+{% for transaction in acc.transaction_set.all %}
+    <li>{{ transaction.description }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>
