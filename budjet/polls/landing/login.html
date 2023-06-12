@@ -1,0 +1,46 @@
+{% include "landing/header.html" %}
+
+<div class="row my-5 py-5">
+    <div class="col-2"></div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-5">Авторизация</h5>
+                <form class="mx-5">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control"
+                               id="exampleInputEmail1" placeholder="1" autocomplete="off" required>
+                        <label for="exampleInputEmail1">Email</label>
+                        <div class="invalid-feedback">
+                             Email error
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control"
+                               id="exampleInputPassword1" placeholder="Password" autocomplete="off" required>
+                        <label for="exampleInputPassword1">Пароль</label>
+                        <div class="invalid-feedback">
+                             Password error
+                        </div>
+                    </div>
+
+
+  <!-- Submit button -->
+                  <button type="button" class="btn btn-primary btn-block mb-4">Вход</button>
+
+                  <!-- Register buttons -->
+                  <div class="text-center">
+                    <p>Нет аккаунта? <a href="/registration">Зарегистироваться</a></p>
+
+                  </div>
+               </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+
+{% include "landing/footer.html" %}
