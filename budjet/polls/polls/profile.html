@@ -1,0 +1,71 @@
+{% include "landing/header.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Profile</title>
+</head>
+<body>
+    <div class="container mt-5 d-flex justify-content-center">
+
+                <div class="card p-3">
+
+                    <div class="d-flex align-items-center">
+
+                        <div class="image">
+                    <img src="https://iznanka.news/upload/resize_cache/iblock/8bc/799_594_1/y8w6376pt65jy0pl39pjc5xqb3df94iv.jpg.webp" class="rounded" width="155" >
+                    </div>
+
+                    <div class="ml-3 w-100">
+
+                       <h4 class="mb-0 mt-0">{{ user.username }}</h4>
+                       <span>ЧТО ТО БУДЕТ ТУТ</span>
+
+                       <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+                        <div class="d-flex flex-column">
+
+                            <span class="articles">КОЛИЧЕСТВО ЧЕГО ТО</span>
+                            <span class="number1">ССЫЛОЧКА НА ЦИФРУ</span>
+
+                        </div>
+
+                        <div class="d-flex flex-column">
+
+                            <span class="followers">КОЛИЧЕСТВО ЧЕГО ТО</span>
+                            <span class="number2">ССЫЛОЧКА НА ЦИФРУ</span>
+
+                        </div>
+
+
+                        <div class="d-flex flex-column">
+
+                            <span class="rating">КОЛИЧЕСТВО ЧЕГО ТО</span>
+                            <span class="number3">ССЫЛОЧКА НА ЦИФРУ</span>
+
+                        </div>
+
+                       </div>
+
+
+                       <div class="button mt-2 d-flex flex-row align-items-center">
+
+                        <button class="btn btn-sm btn-outline-primary w-100" onclick="location.href='{% url 'password_change' %}'">Change password</button>
+                        <button class="btn btn-sm btn-primary w-100 ml-2" onclick="location.href='{% url 'logout' %}?next=/web/profile'">Logout</button>
+
+
+                       </div>
+
+
+                    </div>
+
+
+                    </div>
+
+                </div>
+
+             </div>
+</body>
+
+
+{% include "landing/footer.html" %}

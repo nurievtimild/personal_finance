@@ -1,0 +1,91 @@
+<!--{% include "landing/header.html" %}-->
+<!--<head>-->
+<!--     <script href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--    <script href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--    <title>Login</title>-->
+<!--</head>-->
+
+<!--<div class="row my-5 py-5">-->
+<!--    <div class="col-2"></div>-->
+<!--    <div class="col">-->
+<!--        <div class="card">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title mb-5">Авторизация</h5>-->
+<!--                <form class="mx-5">-->
+
+<!--                    <div class="form-floating mb-3">-->
+<!--                        <input type="text" name="username" class="form-control"-->
+<!--                               id="userName" placeholder="1" autocomplete="off" required>-->
+<!--                        <label for="userName">Email</label>-->
+<!--                        <div class="invalid-feedback">-->
+<!--                             Email error-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="form-floating mb-3">-->
+<!--                        <input type="password" name="password" class="form-control"-->
+<!--                               id="exampleInputPassword1" placeholder="Password" autocomplete="off" required>-->
+<!--                        <label for="exampleInputPassword1">Пароль</label>-->
+<!--                        <div class="invalid-feedback">-->
+<!--                             Password error-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+
+<!--  &lt;!&ndash; Submit button &ndash;&gt;-->
+<!--                  <button type="button" class="btn btn-primary btn-block mb-4">Вход</button>-->
+
+<!--                  &lt;!&ndash; Register buttons &ndash;&gt;-->
+<!--                  <div class="text-center">-->
+<!--                    <p>Нет аккаунта? <a href="/registration">Зарегистироваться</a></p>-->
+
+<!--                  </div>-->
+
+<!--               </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-2"></div>-->
+<!--</div>-->
+
+
+<!--{% include "landing/footer.html" %}-->
+{% include "landing/header.html" %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Login</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo">
+            <img src="https://sun1-28.userapi.com/impg/OPbuJJXRYIJTL4kmwObG68_2O4K1uWkBQnWobw/oH4PjqMmSgY.jpg?size=660x660&quality=96&sign=50c0c70c36ea6508d4c2d62f721468d7&type=album" alt="">
+        </div>
+        <div class="text-center mt-4 name">
+            HASBULLAAAAAAAAAAAA
+        </div>
+        <form class="p-3 mt-3" method="post">
+            {% csrf_token %}
+            <div class="form-field d-flex align-items-center">
+                <span class="far fa-user"></span>
+                <input type="text" name="username" id="userName" placeholder="Username">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="password" name="password" id="pwd" placeholder="Password">
+            </div>
+            {{ form.errors }}
+            <button class="btn mt-3">Login</button>
+        </form>
+
+    </div>
+</body>
+
+
+{% include "landing/footer.html" %}
+
