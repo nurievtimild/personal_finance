@@ -82,6 +82,10 @@
             {{ form.errors }}
             <button class="btn mt-3">Login</button>
         </form>
+        <div class="text-center fs-6">
+            <a href="{% url 'password_reset' %}">Forget password?</a> or <a href="{% url 'polls:register' %}">Sign up</a>
+        </div>
+
 
     </div>
 </body>
