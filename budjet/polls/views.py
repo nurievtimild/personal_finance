@@ -6,8 +6,10 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.template import loader
+from django.urls import reverse_lazy
+from django.views.generic import FormView
 
-from polls.forms import RegisterUserForm
+# from polls.forms import RegisterUserForm
 from .forms import *
 
 
@@ -17,12 +19,14 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def registration(request):
-    template = loader.get_template("landing/registration.html")
-    context = {}
-    form_class = UserCreationForm
-    model = User
-    return HttpResponse(template.render(context, request))
+class RegisterView(FormView):
+    form_class = RegisterForm
+    template_name = 'registration/register.html'
+    success_url = reverse_lazy("polls:profile")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 def about(request):
