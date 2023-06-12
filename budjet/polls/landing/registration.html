@@ -6,9 +6,11 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title mb-5">Регистрация</h5>
-                <form class="mx-5">
+                <form class="mx-5" method="post">
+                    {% csrf_token %}
+
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control"
+                        <input type="email" name="email" class="form-control"
                                id="exampleInputEmail1" placeholder="1" autocomplete="off" required>
                         <label for="exampleInputEmail1">Email</label>
                         <div class="invalid-feedback">
@@ -18,7 +20,7 @@
 
 
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control"
+                        <input type="password" name="password1" class="form-control"
                                id="exampleInputPassword1" placeholder="Password" autocomplete="off" required>
                         <label for="exampleInputPassword1">Password</label>
                         <div class="invalid-feedback">
@@ -27,7 +29,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control"
+                        <input type="password" name="password1" class="form-control"
                                id="exampleInputPassword2" placeholder="Password" autocomplete="off" required>
                         <label for="exampleInputPassword2">Password</label>
                         <div class="invalid-feedback">
