@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -43,4 +43,46 @@ def about(request):
 
 @login_required
 def profile_view(request):
+    if request.method == 'POST':
+        print('456')
+        form = AddAccountForm(request.POST)
+        print(form)
+
+        if form.is_valid():
+            # print(form.cleaned_data)
+            print('111')
+            # form.nameofuser = request.user.id
+            instance = form.save(commit=False)
+            instance.nameofuser = request.user
+            instance.save()
+
+
+            print('1222')
+            return redirect('profile')
+        print('565656')
+
     return render(request, 'polls/profile.html')
+
+# class AccountView(FormView):
+#     form_class = AddAccountForm
+#     success_url = reverse_lazy("polls:profile")
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
+
+
+# def add_account(request):
+#     print('123')
+#     if request.method == 'POST':
+#         print('456')
+#         form = AddAccountForm(request.POST)
+#         print('987')
+#         if form.is_valid():
+#             # print(form.cleaned_data)
+#             print('111')
+#             form.save()
+#             print('1222')
+#             return redirect('profile')
+#         print('565656')
+#
+#     return render(request, 'polls/profile.html')
