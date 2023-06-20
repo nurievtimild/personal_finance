@@ -44,7 +44,7 @@ def about(request):
 @login_required
 def profile_view(request):
     if request.method == 'POST':
-        print('45611')
+        print('456111')
         form = AddAccountForm(request.POST)
         print(form)
 
