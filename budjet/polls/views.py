@@ -11,6 +11,8 @@ from django.views.generic import FormView
 
 # from polls.forms import RegisterUserForm
 from .forms import *
+from .models import UserAccounts
+
 
 
 def index(request):
@@ -56,12 +58,14 @@ def profile_view(request):
             instance.nameofuser = request.user
             instance.save()
 
-
             print('1222')
             return redirect('profile')
         print('565656')
-
-    return render(request, 'polls/profile.html')
+    user_accounts = UserAccounts.objects.all()
+    accounts_names = []
+    for acc in user_accounts:
+        accounts_names.append(acc.account_name)
+    return render(request, 'polls/profile.html', {'user_accounts': user_accounts})
 
 # class AccountView(FormView):
 #     form_class = AddAccountForm
