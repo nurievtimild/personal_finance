@@ -2,10 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
-# Create your views here.
-
-from django.http import HttpResponse
-from django.template import loader
+# from django.template import loader
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
@@ -13,12 +10,8 @@ from django.views.generic import FormView
 from .forms import *
 from .models import UserAccounts
 
-
-
 def index(request):
-    template = loader.get_template("landing/index.html")
-    context = {}
-    return HttpResponse(template.render(context, request))
+    return render(request, "polls/landing/index.html")
 
 
 class RegisterView(FormView):
@@ -32,15 +25,11 @@ class RegisterView(FormView):
 
 
 def about(request):
-    template = loader.get_template("landing/about.html")
-    context = {}
-    return HttpResponse(template.render(context, request))
+    return render(request, "polls/landing/about.html")
 
 
 # def login(request):
-#     template = loader.get_template("landing/login.html")
-#     context = {}
-#     return HttpResponse(template.render(context, request))
+#     return render(request, "polls/landing/login.html")
 
 
 @login_required
@@ -65,7 +54,7 @@ def profile_view(request):
     accounts_names = []
     for acc in user_accounts:
         accounts_names.append(acc.account_name)
-    return render(request, 'polls/profile.html', {'user_accounts': user_accounts})
+    return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts})
 
 # class AccountView(FormView):
 #     form_class = AddAccountForm
@@ -89,4 +78,4 @@ def profile_view(request):
 #             return redirect('profile')
 #         print('565656')
 #
-#     return render(request, 'polls/profile.html')
+#     return render(request, 'polls/profile/profile.html')

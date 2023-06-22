@@ -8,6 +8,4 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('about/', views.about, name='about'),
     path("profile/", profile_view, name='profile'),
-
-
 ]
