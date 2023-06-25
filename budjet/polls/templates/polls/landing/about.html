@@ -1,4 +1,10 @@
-{% include "polls/landing/header.html" %}
+{% extends "polls/landing/base.html" %}
+
+{% block title %}
+Описание
+{% endblock %}
+
+{% block content %}
 
 <main>
   <div class="container marketing">
@@ -39,4 +45,4 @@
   </div>
 </main>
 
-{% include "polls/landing/footer.html" %}
+{% endblock %}

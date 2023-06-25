@@ -1,9 +1,17 @@
-{% include "polls/landing/header.html" %}
+{% extends "polls/landing/base.html" %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+
 <style>
   .center {
     text-align: center;
   }
 </style>
+
 <div class="row my-5 py-5">
     <div class="col-2"></div>
     <div class="col">
@@ -60,4 +68,4 @@
     <div class="col-2"></div>
 </div>
 
-{% include "polls/landing/footer.html" %}
+{% endblock %}

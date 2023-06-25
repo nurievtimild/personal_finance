@@ -1,10 +1,11 @@
-{% include "polls/landing/header.html" %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "polls/landing/base.html" %}
 
-    <title>Profile</title>
-</head>
+{% block title %}
+Профиль
+{% endblock %}
+
+{% block content %}
+
 <body>
     <div class="container mt-5 d-flex justify-content-center">
 
@@ -127,6 +128,8 @@
         </ul>
     </div>
 </body>
+
+{% endblock %}
 
 
 {% include "polls/landing/footer.html" %}

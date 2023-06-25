@@ -1,4 +1,10 @@
-{% include "polls/landing/header.html" %}
+{% extends "polls/landing/base.html" %}
+
+{% block title %}
+Вход
+{% endblock %}
+
+{% block content %}
 
 <style>
 .content {
@@ -37,4 +43,4 @@
   </div>
 </main>
 
-{% include "polls/landing/footer.html" %}
+{% endblock %}
