@@ -60,51 +60,7 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                           Добавить счёт
                         </button>
-
-
-                        <!-- Modal -->
-
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Добавление счёта</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-
-                                 <form action="{% url 'profile' %}" method="post">
-                                  {% csrf_token %}
-
-                                         <div class="form-error">{{ form.non_field_errors }}</div>
-
-
-
-                              <div class="modal-body">
-                                <div class="input-group input-group-lg">
-                                  <span class="input-group-text">Название счёта</span>
-                                  <input type="text" name="account_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-                                </div>
-                                <div class="input-group input-group-lg">
-                                  <span class="input-group-text">Начальный баланс</span>
-                                  <input type="number" name="account_start_balance" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                              </div>
-                                         <button type="submit">Добавить</button>
-                                </form>
-                            </div>
-                          </div>
-                        </div>
-
-
-
-
-
-
+                        {% include "polls/profile/create_account.html" %}
 
                     </div>
 
@@ -121,6 +77,17 @@
               <li class="list-group-item d-flex justify-content-between align-items-center">
                   {{each.account_name}}
                 <span class="badge bg-primary rounded-pill">{{each.account_start_balance}}</span>
+                  <form action="{% url 'delete_account' account_id=each.account_id %}" method="post">
+                      {% csrf_token %}
+                      <input type="submit" value="Удалить">
+                  </form>
+<!--                  &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--                          Изменить счёт-->
+<!--                        </button>-->
+<!--                        {% include "polls/profile/create_account.html" %}-->
+
+
               </li>
             {% endif %}
             {% endfor %}
