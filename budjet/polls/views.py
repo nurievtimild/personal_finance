@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 # from django.template import loader
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, DeleteView, UpdateView
 
 # from polls.forms import RegisterUserForm
 from .forms import *
@@ -49,6 +49,22 @@ def profile_view(request):
             return redirect('profile')
     user_accounts = UserAccounts.objects.all()
     return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts})
+#Удаление счета
+def delete_account(request, account_id):
+    account = UserAccounts.objects.get(pk=account_id)
+    account.delete()
+    return redirect('profile')
+
+@login_required
+def edit_account(request, account_id):
+    account = UserAccounts.objects.get(pk=account_id)
+    if request.method == 'POST':
+        account.account_name = request.POST.get('account_name')
+        account.account_start_balance = request.POST.get('account_start_balance')
+        account.save()
+        return redirect('profile')
+    else:
+        return render(request, 'edit_profile.html')
 
 # class AccountView(FormView):
 #     form_class = AddAccountForm
