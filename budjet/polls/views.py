@@ -42,7 +42,6 @@ def about(request):
 def profile_view(request):
     if request.method == 'POST':
         form = AddAccountForm(request.POST)
-        print(form)
         if form.is_valid():
             # print(form.cleaned_data)
             # form.nameofuser = request.user.id
@@ -53,6 +52,24 @@ def profile_view(request):
     user_accounts = UserAccounts.objects.all()
     return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts, })
 
+
+@login_required
+def add_transaction(request, account_id):
+    if request.method == 'POST':
+        form = AddTransactionForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.account_id = UserAccounts.objects.get(pk=account_id)
+            if instance.is_expense:
+                instance.amount = -int(request.POST.get('amount'))
+            instance.save()
+            return redirect('profile')
+        else:
+            # Do something in case if form is not valid
+            raise ValidationError(form.errors)
+
+    # account_transaction = Transaction.objects.all()
+    return render(request, 'polls/profile/profile.html')
 
 def delete_account(request, account_id):
     account = UserAccounts.objects.get(pk=account_id)
@@ -68,7 +85,7 @@ def edit_account(request, account_id):
         account.save()
         return redirect('profile')
     else:
-        return render(request, 'edit_profile.html')
+        return render(request, 'profile.html')
 
 # class AccountView(FormView):
 #     form_class = AddAccountForm
