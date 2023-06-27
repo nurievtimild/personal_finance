@@ -59,25 +59,16 @@ def delete_account(request, account_id):
     account.delete()
     return redirect('profile')
 
-
-# def edit_account(request, account_id):
-#     account = UserAccounts.objects.get(pk=account_id)
-#     fields = ['account_name', 'account_start_balance']
-#     if request.method == 'POST':
-#         form = AddAccountForm(request.POST, instance=account)
-#         if form.is_valid():
-#             fields = ['account_name', 'account_start_balance']
-#             form.update()
-#             return redirect('profile')
-#     else:
-#         form = AddAccountForm(instance=account)
-#     return render(request, 'polls/profile/profile.html', {'form': form})
-
-# class AccountDeleteView(DeleteView):
-#     model = UserAccounts
-#     success_url = reverse_lazy("profile")
-#     template_name = 'polls/profile/delete_account.html'
-
+@login_required
+def edit_account(request, account_id):
+    account = UserAccounts.objects.get(pk=account_id)
+    if request.method == 'POST':
+        account.account_name = request.POST.get('account_name')
+        account.account_start_balance = request.POST.get('account_start_balance')
+        account.save()
+        return redirect('profile')
+    else:
+        return render(request, 'edit_profile.html')
 
 # class AccountView(FormView):
 #     form_class = AddAccountForm
