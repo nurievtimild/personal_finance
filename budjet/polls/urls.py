@@ -9,5 +9,5 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path("profile/", profile_view, name='profile'),
     path('<int:account_id>/delete_account/', views.delete_account, name='delete_account'),
-    # path('<int:account_id>/edit_account/', views.edit_account, name='edit_account')
+    path('<int:account_id>/edit_account/', views.edit_account, name='edit_account')
 ]
