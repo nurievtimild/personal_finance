@@ -1,10 +1,11 @@
-{% include "polls/landing/header.html" %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "polls/landing/base.html" %}
 
-    <title>Profile</title>
-</head>
+{% block title %}
+Профиль
+{% endblock %}
+
+{% block content %}
+
 <body>
     <div class="container mt-5 d-flex justify-content-center">
 
@@ -111,7 +112,7 @@
               <li class="list-group-item d-flex justify-content-between align-items-center">
                   {{each.account_name}}
                 <span class="badge bg-primary rounded-pill">{{each.account_start_balance}}</span>
-                  <form action="{% url 'delete_account' account_id=each.account_id %}" method="POST">
+                  <form action="{% url 'delete_account' account_id=each.account_id %}" method="post">
                       {% csrf_token %}
                       <input type="submit" value="Удалить">
                   </form>
@@ -158,6 +159,8 @@
         </ul>
     </div>
 </body>
+
+{% endblock %}
 
 
 {% include "polls/landing/footer.html" %}
