@@ -17,3 +17,9 @@ class AddAccountForm(forms.ModelForm):
         model = UserAccounts
         fields = ('nameofuser', 'account_name', 'account_start_balance')
 
+
+class AddTransactionForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ('is_income', 'is_expense', 'is_transfer', 'amount', 'description', 'category', 'transfer_account_id')
+
