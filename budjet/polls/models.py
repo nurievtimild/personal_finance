@@ -11,6 +11,7 @@ class UserAccounts(models.Model):
     account_name = models.CharField(max_length=200)
     account_start_balance = models.FloatField(default=0.0)
     account_start_date = models.DateTimeField(auto_now_add=True)
+    account_current_balance = models.FloatField(default=0.0)
 
     def __int__(self):
         return self.account_id
@@ -24,10 +25,9 @@ class Transaction(models.Model):
     is_transfer = models.BooleanField(default=False)
     amount = models.FloatField(default=0.0)
     transaction_date = models.DateTimeField(auto_now_add=True)
-    description = models.CharField(max_length=500, default='')
-    transaction_id = models.AutoField(primary_key=True)
-    category = models.CharField(max_length=200, default='')
-    account_current_balance = models.FloatField(default=0.0)
+    description = models.CharField(max_length=500, blank=True, null=True)
+    transaction_id = models.AutoField(primary_key=True, auto_created=True)
+    category = models.CharField(max_length=200, blank=True, null=True)
     transfer_account_id = models.IntegerField(blank=True, null=True)
 
     def __str__(self):

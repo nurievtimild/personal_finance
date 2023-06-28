@@ -42,17 +42,47 @@ def about(request):
 def profile_view(request):
     if request.method == 'POST':
         form = AddAccountForm(request.POST)
-        print(form)
         if form.is_valid():
             # print(form.cleaned_data)
             # form.nameofuser = request.user.id
             instance = form.save(commit=False)
             instance.nameofuser = request.user
+            instance.account_current_balance = request.POST.get('account_start_balance')
             instance.save()
             return redirect('profile')
     user_accounts = UserAccounts.objects.all()
+
     return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts, })
 
+
+@login_required
+def add_transaction(request, account_id):
+    if request.method == 'POST':
+        form = AddTransactionForm(request.POST)
+        user_account = UserAccounts.objects.get(account_id=account_id)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.account_id = UserAccounts.objects.get(pk=account_id)
+            if instance.is_expense:
+                instance.amount = -float(request.POST.get('amount'))
+                user_account.account_current_balance -= float(request.POST.get('amount'))
+            elif instance.is_income:
+                user_account.account_current_balance += float(request.POST.get('amount'))
+            elif instance.is_transfer:
+                transfer_account = UserAccounts.objects.get(account_id=instance.transfer_account_id)
+                transfer_account.account_current_balance += float(request.POST.get('amount'))
+                user_account.account_current_balance -= float(request.POST.get('amount'))
+                transfer_account.save()
+            user_account.save()
+            instance.save()
+
+            return redirect('profile')
+        else:
+            # Do something in case if form is not valid
+            raise ValidationError(form.errors)
+
+    # account_transaction = Transaction.objects.all()
+    return render(request, 'polls/profile/profile.html')
 
 def delete_account(request, account_id):
     account = UserAccounts.objects.get(pk=account_id)
@@ -65,10 +95,11 @@ def edit_account(request, account_id):
     if request.method == 'POST':
         account.account_name = request.POST.get('account_name')
         account.account_start_balance = request.POST.get('account_start_balance')
+        account.account_current_balance = request.POST.get('account_start_balance')
         account.save()
         return redirect('profile')
     else:
-        return render(request, 'edit_profile.html')
+        return render(request, 'profile.html')
 
 # class AccountView(FormView):
 #     form_class = AddAccountForm
