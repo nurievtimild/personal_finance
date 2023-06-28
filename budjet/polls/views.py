@@ -95,6 +95,7 @@ def edit_account(request, account_id):
     if request.method == 'POST':
         account.account_name = request.POST.get('account_name')
         account.account_start_balance = request.POST.get('account_start_balance')
+        account.account_current_balance = request.POST.get('account_start_balance')
         account.save()
         return redirect('profile')
     else:

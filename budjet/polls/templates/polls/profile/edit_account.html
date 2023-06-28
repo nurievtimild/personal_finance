@@ -23,10 +23,14 @@
                     <span class="input-group-text">Название счёта</span>
                     <input type="text" id="account_name" name="account_name" value="{{ each.account_name }}">
                 </div>
-                <div class="input-group input-group-lg">
-                    <span class="input-group-text">Начальный баланс</span>
-                    <input type="number" id="account_start_balance" name="account_start_balance" value="{{ each.account_start_balance }}">
-                </div>
+
+
+                {% if each.account_current_balance == each.account_start_balance%}
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">Начальный баланс</span>
+                        <input type="number" id="account_start_balance" name="account_start_balance" value="{{ each.account_start_balance }}">
+                    </div>
+                {% endif %}
 
             </div>
             <div class="modal-footer">
