@@ -73,6 +73,7 @@ def add_transaction(request, account_id):
                 transfer_account.account_current_balance += float(request.POST.get('amount'))
                 user_account.account_current_balance -= float(request.POST.get('amount'))
                 transfer_account.save()
+            user_account.account_new = False
             user_account.save()
             instance.save()
 
@@ -94,8 +95,9 @@ def edit_account(request, account_id):
     account = UserAccounts.objects.get(pk=account_id)
     if request.method == 'POST':
         account.account_name = request.POST.get('account_name')
-        account.account_start_balance = request.POST.get('account_start_balance')
-        account.account_current_balance = request.POST.get('account_start_balance')
+        if account.account_new:
+            account.account_start_balance = request.POST.get('account_start_balance')
+            account.account_current_balance = request.POST.get('account_start_balance')
         account.save()
         return redirect('profile')
     else:
