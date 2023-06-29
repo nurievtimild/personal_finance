@@ -112,7 +112,7 @@ def history_accounts(request, account_id):
 
 def delete_transaction(request, transaction_id):
     transaction = Transaction.objects.get(transaction_id=transaction_id)
-    account_id = transaction.account_id
+    account_id = int(transaction.account_id)
     transaction.delete()
     return redirect('history_accounts', account_id)
 
