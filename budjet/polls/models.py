@@ -31,5 +31,5 @@ class Transaction(models.Model):
     category = models.CharField(max_length=200, blank=True, null=True)
     transfer_account_id = models.IntegerField(blank=True, null=True)
 
-    def __str__(self):
+    def __float__(self):
         return self.amount
