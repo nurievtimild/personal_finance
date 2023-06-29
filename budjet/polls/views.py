@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-
+from django.shortcuts import get_object_or_404
 # from django.template import loader
 from django.urls import reverse_lazy
 from django.views.generic import FormView, DeleteView, UpdateView
@@ -50,7 +50,7 @@ def profile_view(request):
             instance.account_current_balance = request.POST.get('account_start_balance')
             instance.save()
             return redirect('profile')
-    user_accounts = UserAccounts.objects.all()
+    user_accounts = UserAccounts.objects.order_by('account_start_date')
 
     return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts, })
 
@@ -103,26 +103,17 @@ def edit_account(request, account_id):
     else:
         return render(request, 'profile.html')
 
-# class AccountView(FormView):
-#     form_class = AddAccountForm
-#     success_url = reverse_lazy("polls:profile")
-#     def form_valid(self, form):
-#         form.save()
-#         return super().form_valid(form)
+@login_required
+def history_accounts(request, account_id):
+    transactions = Transaction.objects.filter(account_id=account_id)
+
+    return render(request, 'polls/profile/history_accounts.html', {'transactions': transactions, })
 
 
-# def add_account(request):
-#     print('123')
-#     if request.method == 'POST':
-#         print('456')
-#         form = AddAccountForm(request.POST)
-#         print('987')
-#         if form.is_valid():
-#             # print(form.cleaned_data)
-#             print('111')
-#             form.save()
-#             print('1222')
-#             return redirect('profile')
-#         print('565656')
-#
-#     return render(request, 'polls/profile/profile.html')
+def delete_transaction(request, transaction_id):
+    transaction = Transaction.objects.get(transaction_id=transaction_id)
+    account_id = transaction.account_id
+    transaction.delete()
+
+    return redirect('history_accounts', account_id=account_id)
+
