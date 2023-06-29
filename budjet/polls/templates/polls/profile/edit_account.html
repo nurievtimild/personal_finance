@@ -25,7 +25,7 @@
                 </div>
 
 
-                {% if each.account_current_balance == each.account_start_balance%}
+                {% if each.account_new %}
                     <div class="input-group input-group-lg">
                         <span class="input-group-text">Начальный баланс</span>
                         <input type="number" id="account_start_balance" name="account_start_balance" value="{{ each.account_start_balance }}">

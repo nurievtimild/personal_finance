@@ -12,6 +12,7 @@ class UserAccounts(models.Model):
     account_start_balance = models.FloatField(default=0.0)
     account_start_date = models.DateTimeField(auto_now_add=True)
     account_current_balance = models.FloatField(default=0.0)
+    account_new = models.BooleanField(default=True, blank=True, null=True)
 
     def __int__(self):
         return self.account_id
