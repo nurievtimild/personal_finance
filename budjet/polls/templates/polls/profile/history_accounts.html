@@ -7,8 +7,15 @@
 {% block content %}
 
 
-<body>
 <div>
+<div>
+    <div class="text-center">
+        <div class="content">
+            <main class="px-3">
+                <h1>Название счета: {{account.account_name}}</h1>
+            </main>
+        </div>
+    </div>
         <table class="table">
         <thead>
     <tr>
@@ -28,7 +35,7 @@
                     <tr>
                         {% if a.is_income %}
                             <td>Доход</td>
-                            <td>{{a.amount}}</td>
+                            <td style="color: green">+{{a.amount}}</td>
                             <td>
                                 {% if a.category %}
                                 {{a.category}}
@@ -37,12 +44,25 @@
                             </td>
                         {% elif a.is_expense%}
                             <td>Расход</td>
-                            <td>{{a.amount}}</td>
+                            <td style="color: red">{{a.amount}}</td>
                             <td>{{a.category}}</td>
                         {% elif a.is_transfer%}
                             <td>Перевод</td>
-                            <td>{{a.amount}}</td>
-                            <td>Перевод на счет:</td>
+                            {% if a.amount < 0 %}
+                                <td style="color: red">{{a.amount}}</td>
+                                {% for i in transfer_accounts %}
+                                    {% if i.account_id == a.transfer_account_id %}
+                                        <td>Перевод на счет: {{i.account_name}}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% elif a.is_transfer%}
+                                <td style="color: green">+{{a.amount}}</td>
+                                {% for i in transfer_accounts %}
+                                    {% if i.account_id == a.transfer_account_id %}
+                                        <td>Перевод со счета: {{i.account_name}}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         {% endif %}
                             <td>{{a.description}}</td>
                             <td>{{a.transaction_date}}</td>
@@ -59,7 +79,7 @@
              </tbody>
 </table>
     </div>
-</body>
+</div>
 
 
 {% endblock %}
