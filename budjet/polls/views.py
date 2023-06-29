@@ -72,7 +72,14 @@ def add_transaction(request, account_id):
                 transfer_account = UserAccounts.objects.get(account_id=instance.transfer_account_id)
                 transfer_account.account_current_balance += float(request.POST.get('amount'))
                 user_account.account_current_balance -= float(request.POST.get('amount'))
+                transfer_instance = Transaction.objects.create(account_id=transfer_account,
+                                                               is_transfer=True,
+                                                               amount=instance.amount,
+                                                               description=instance.description,
+                                                               category=instance.category,
+                                                               transfer_account_id=instance.account_id)
                 transfer_account.save()
+                instance.amount = -float(request.POST.get('amount'))
             user_account.account_new = False
             user_account.save()
             instance.save()
@@ -106,8 +113,9 @@ def edit_account(request, account_id):
 @login_required
 def history_accounts(request, account_id):
     transactions = Transaction.objects.filter(account_id=account_id)
-
-    return render(request, 'polls/profile/history_accounts.html', {'transactions': transactions, })
+    account = UserAccounts.objects.get(pk=account_id)
+    transfer_accounts = UserAccounts.objects.filter(nameofuser=account.nameofuser)
+    return render(request, 'polls/profile/history_accounts.html', {'transactions': transactions, 'account': account, 'transfer_accounts':transfer_accounts,})
 
 
 def delete_transaction(request, transaction_id):
