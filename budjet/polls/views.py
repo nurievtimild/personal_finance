@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404
 # from django.template import loader
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, DeleteView, UpdateView
-from django.db.models import Sum
 # from polls.forms import RegisterUserForm
 from .forms import *
 from .models import UserAccounts
@@ -51,8 +50,13 @@ def profile_view(request):
             instance.save()
             return redirect('profile')
     user_accounts = UserAccounts.objects.order_by('account_start_date')
-
-    return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts, })
+    acc_quantity = 0
+    profile_balance = 0
+    for each in user_accounts:
+        if each.nameofuser_id == request.user.id:
+            acc_quantity += 1
+            profile_balance += each.account_current_balance
+    return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts, 'acc_quantity': acc_quantity, 'profile_balance': profile_balance})
 
 
 @login_required
@@ -123,4 +127,3 @@ def delete_transaction(request, transaction_id):
     account_id = int(transaction.account_id)
     transaction.delete()
     return redirect('history_accounts', account_id)
-
