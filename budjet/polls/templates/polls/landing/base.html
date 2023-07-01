@@ -8,7 +8,11 @@
   </head>
 
   <header>
+    {% if request.user.is_authenticated %}
+    {% include "polls/landing/authed_header.html" %}
+    {% else %}
     {% include "polls/landing/header.html" %}
+    {% endif %}
   </header>
 
   <main>

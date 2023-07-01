@@ -19,7 +19,7 @@
 
                     <div class="ml-3 w-100">
 
-                       <h4 class="mb-0 mt-0">{{ user.username }}</h4>
+                       <h4 class="text-center mb-0 mt-0">{{ user.username }}</h4>
                        <span>ЧТО ТО БУДЕТ ТУТ</span>
 
                        <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
@@ -48,14 +48,6 @@
 
                        </div>
 
-
-                       <div class="button mt-2 d-flex flex-row align-items-center">
-
-                        <button class="btn btn-sm btn-outline-primary w-100" onclick="location.href='{% url 'password_change' %}'">Change password</button>
-                        <button class="btn btn-sm btn-primary w-100 ml-2" onclick="location.href='{% url 'logout' %}?next=/profile'">Logout</button>
-
-
-                       </div>
 
 
 
@@ -108,6 +100,3 @@
 </body>
 
 {% endblock %}
-
-
-{% include "polls/landing/footer.html" %}

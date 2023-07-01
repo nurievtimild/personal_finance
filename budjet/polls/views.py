@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 # from django.template import loader
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, DeleteView, UpdateView
-
+from django.db.models import Sum
 # from polls.forms import RegisterUserForm
 from .forms import *
 from .models import UserAccounts
@@ -123,5 +123,4 @@ def delete_transaction(request, transaction_id):
     account_id = int(transaction.account_id)
     transaction.delete()
     return redirect('history_accounts', account_id)
-
 

@@ -4,10 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-#Модель счёта
+# Модель счёта
 class UserAccounts(models.Model):
     account_id = models.AutoField(primary_key=True, auto_created=True)
-    nameofuser = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, default=None)
+    nameofuser = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, default=None)
     account_name = models.CharField(max_length=200)
     account_start_balance = models.FloatField(default=0.0)
     account_start_date = models.DateTimeField(auto_now_add=True)
@@ -18,7 +18,7 @@ class UserAccounts(models.Model):
         return self.account_id
 
 
-#Модель транзакции
+# Модель транзакции
 class Transaction(models.Model):
     account_id = models.ForeignKey(UserAccounts, on_delete=models.CASCADE)
     is_income = models.BooleanField(default=False)
