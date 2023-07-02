@@ -31,7 +31,7 @@
         </thead>
             <tbody>
 
-                    {% for a in transactions %}
+                    {% for a in trans_list %}
                     <tr>
                         {% if a.is_income %}
                             <td>Доход</td>
@@ -45,26 +45,49 @@
                         {% elif a.is_expense%}
                             <td>Расход</td>
                             <td style="color: red">{{a.amount}}</td>
-                            <td>{{a.category}}</td>
+                            <td>{% if a.category %}
+                                {{a.category}}
+                                {% else %}  —
+                                {% endif %}
+                            </td>
                         {% elif a.is_transfer%}
                             <td>Перевод</td>
-                            {% if a.amount < 0 %}
-                                <td style="color: red">{{a.amount}}</td>
-                                {% for i in transfer_accounts %}
-                                    {% if i.account_id == a.transfer_account_id %}
-                                        <td>Перевод на счет: {{i.account_name}}</td>
+
+                             {% if a.transfer_account_id == account.account_id %}
+
+                                        <td style="color: green">+{{a.amount}}</td>
+                                        {% for i in transfer_accounts %}
+                                            {% if i.account_id == a.transfer_account_id %}
+                                                <td>Перевод со счета: {{i.account_name}}</td>
+                                            {% endif %}
+                                        {% endfor %}
+
+                            {% else %}
+
+                                    {% if a.amount < 0 %}
+                                        <td style="color: red">{{a.amount}}</td>
+                                        {% for i in transfer_accounts %}
+                                            {% if i.account_id == a.transfer_account_id %}
+                                                <td>Перевод на счет: {{i.account_name}}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% elif a.is_transfer%}
+                                        <td style="color: green">+{{a.amount}}</td>
+                                        {% for i in transfer_accounts %}
+                                            {% if i.account_id == a.transfer_account_id %}
+                                                <td>Перевод со счета: {{i.account_name}}</td>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endif %}
-                                {% endfor %}
-                            {% elif a.is_transfer%}
-                                <td style="color: green">+{{a.amount}}</td>
-                                {% for i in transfer_accounts %}
-                                    {% if i.account_id == a.transfer_account_id %}
-                                        <td>Перевод со счета: {{i.account_name}}</td>
-                                    {% endif %}
-                                {% endfor %}
+
+
                             {% endif %}
+
                         {% endif %}
-                            <td>{{a.description}}</td>
+                            <td>{% if a.description %}
+                                {{a.description}}
+                                {% else %}  —
+                                {% endif %}</td>
                             <td>{{a.transaction_date}}</td>
                             <td>
                                  <form action="{% url 'delete_transaction' transaction_id=a.transaction_id%}" method="post">
