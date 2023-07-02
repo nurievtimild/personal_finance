@@ -77,12 +77,6 @@ def add_transaction(request, account_id):
                 transfer_account.account_current_balance += float(request.POST.get('amount'))
                 user_account.account_current_balance -= float(request.POST.get('amount'))
                 instance.trans_acc_name = user_account.account_name
-                # transfer_instance = Transaction.objects.create(account_id=transfer_account,
-                #                                                is_transfer=True,
-                #                                                amount=instance.amount,
-                #                                                description=instance.description,
-                #                                                category=instance.category,
-                #                                                transfer_account_id=instance.account_id)
                 transfer_account.save()
             user_account.account_new = False
             user_account.save()
