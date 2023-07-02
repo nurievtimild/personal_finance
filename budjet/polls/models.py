@@ -30,6 +30,7 @@ class Transaction(models.Model):
     transaction_id = models.AutoField(primary_key=True, auto_created=True)
     category = models.CharField(max_length=200, blank=True, null=True)
     transfer_account_id = models.IntegerField(blank=True, null=True)
+    trans_acc_name = models.CharField(max_length=500, blank=True, null=True)
 
     def __float__(self):
         return self.amount
