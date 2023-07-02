@@ -139,3 +139,37 @@ def delete_transaction(request, transaction_id):
 
     return redirect('history_accounts', account_id)
 
+
+
+
+def edit_transaction(request, transaction_id):
+    transaction = Transaction.objects.get(transaction_id=transaction_id)
+    user_account = UserAccounts.objects.get(account_id=transaction.account_id)
+    account_id = int(transaction.account_id)
+    if request.method == 'POST':
+        if transaction.is_expense or transaction.is_income:
+            user_account.account_current_balance -= float(transaction.amount)
+            transaction.amount = request.POST.get('amount')
+            transaction.category = request.POST.get('category')
+            transaction.description = request.POST.get('description')
+            user_account.account_current_balance += float(transaction.amount)
+        elif transaction.is_transfer:
+            transfer_account = UserAccounts.objects.get(account_id=transaction.transfer_account_id)
+            user_account.account_current_balance += float(transaction.amount)
+            transfer_account.account_current_balance -= float(transaction.amount)
+            transaction.amount = request.POST.get('amount')
+            transaction.description = request.POST.get('description')
+            transfer_account.save()
+            transaction.transfer_account_id = request.POST.get('transfer_account_id')
+            user_account.account_current_balance -= float(transaction.amount)
+            transfer_account_new = UserAccounts.objects.get(account_id=transaction.transfer_account_id)
+            transfer_account_new.account_current_balance += float(transaction.amount)
+            transaction.trans_acc_name =transfer_account_new.account_name
+            transfer_account_new.save()
+
+        transaction.save()
+        user_account.save()
+    return redirect('history_accounts', account_id)
+
+
+

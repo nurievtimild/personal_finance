@@ -86,7 +86,12 @@
                               <input type="submit" value="Удалить">
                                 </form>
                              </td>
-                            <td>{{a.account_name}}</td>
+                            <td>
+                                {% if a.transfer_account_id != account.account_id %}
+                                    {% include "polls/profile/edit_transaction.html" %}
+                                {% endif %}
+                            </td>
+
                     </tr>
                     {% endfor %}
              </tbody>

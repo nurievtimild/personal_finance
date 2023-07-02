@@ -1,0 +1,104 @@
+
+<!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditTransactionModal{{a.transaction_id}}">
+      Редактировать операцию
+    </button>
+
+<!-- Modal -->
+
+<div class="modal fade" id="EditTransactionModal{{a.transaction_id}}" tabindex="-1" aria-labelledby="EditTransactionModalLabel{{a.transaction_id}}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="EditTransactionModalLabel{{a.transaction_id}}">Изменение операции</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+        <form action="{% url 'edit_transaction' transaction_id=a.transaction_id %}" method="POST">
+          {% csrf_token %}
+             <div class="form-error">{{ form.non_field_errors }}</div>
+
+            <div class="modal-body">
+
+                {% if a.is_income %}
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">Сумма</span>
+                        <input type="text" id="amount" name="amount" value="{{ a.amount }}" min="0" required>
+                    </div>
+                     <div class="input-group input-group-lg">
+                        <span class="input-group-text">Категория</span>
+
+                         {% if a.category %}
+                            <input type="text" id="category" name="category" value="{{ a.category }}">
+                         {% else %}
+                            <input type="text" id="category" name="category" value="">
+                         {% endif %}
+
+                    </div>
+                     <div class="input-group input-group-lg">
+                        <span class="input-group-text">Описание</span>
+                         {% if a.description %}
+                            <input type="text" id="description" name="description" value="{{ a.description }}">
+                         {% else %}
+                            <input type="text" id="description" name="description" value="">
+                         {% endif %}
+                    </div>
+
+                {% elif a.is_expense %}
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">Сумма</span>
+                        <input type="number" id="amount" name="amount" value="{{ a.amount }}" max="0" required>
+                    </div>
+                     <div class="input-group input-group-lg">
+                        <span class="input-group-text">Категория</span>
+                         {% if a.category %}
+                            <input type="text" id="category" name="category" value="{{ a.category }}">
+                         {% else %}
+                            <input type="text" id="category" name="category" value="">
+                         {% endif %}
+                    </div>
+                     <div class="input-group input-group-lg">
+                        <span class="input-group-text">Описание</span>
+                         {% if a.description %}
+                            <input type="text" id="description" name="description" value="{{ a.description }}">
+                         {% else %}
+                            <input type="text" id="description" name="description" value="">
+                         {% endif %}
+                    </div>
+
+                {% elif a.is_transfer %}
+
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">Сумма</span>
+                        <input type="number" id="amount" name="amount" value="{{ a.amount }}" min="0" required>
+                    </div>
+                    <div class="form-floating">
+                      <select class="form-select" name="transfer_account_id" id="floatingSelect" aria-label="Floating label select example" required>
+                        <option selected value=''>Выбирите один из ваших счётов</option>
+                          {% for i in transfer_accounts %}
+                                {% if i.account_id != a.account_id %}
+                          <option value="{{ i.account_id }}"> {{i.account_name}}   </option>
+                            {% endif %}
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">Описание</span>
+                        {% if a.description %}
+                            <input type="text" id="description" name="description" value="{{ a.description }}">
+                         {% else %}
+                            <input type="text" id="description" name="description" value="">
+                         {% endif %}
+                    </div>
+
+                {% endif %}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
