@@ -141,9 +141,7 @@
           <span class="input-group-text">Сумма</span>
           <input type="number" name="amount" step="0.01" min="0" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" required>
           </div>
-
-          <div class="form-floating">
-          <select class="form-select" name="transfer_account_id" id="floatingSelect" aria-label="Floating label select example" required>
+          <select class="form-select form-select-lg" name="transfer_account_id" aria-label=".form-select-lg example" required>
             <option selected value=''>Выбирите один из ваших счётов</option>
               {% for a in user_accounts %}
                 {% if a.nameofuser_id == user.id%}
@@ -154,7 +152,6 @@
               {% endfor %}
 
           </select>
-          </div>
 
           <div class="input-group input-group-lg">
           <span class="input-group-text">Описание</span>
