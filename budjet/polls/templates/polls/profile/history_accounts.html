@@ -57,7 +57,9 @@
 
                                         <td style="color: green">+{{a.amount}}</td>
 
-                                                <td>Перевод со счета: {{a.trans_acc_name}}</td>
+                                                <td>Перевод со счета:
+                                                    <a href="{% url 'history_accounts' account_id=a.account_id.account_id %}" class="link-danger link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">{{a.account_id.account_name}}</a>
+                                                </td>
 
 
                             {% else %}
@@ -66,7 +68,9 @@
                                         <td style="color: red">-{{a.amount}}</td>
                                         {% for i in transfer_accounts %}
                                             {% if i.account_id == a.transfer_account_id %}
-                                                <td>Перевод на счет: {{i.account_name}}</td>
+                                                <td>Перевод на счет:
+                                                    <a href="{% url 'history_accounts' account_id=i.account_id %}" class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">{{i.account_name}}</a>
+                                                </td>
                                             {% endif %}
                                         {% endfor %}
 
