@@ -8,7 +8,7 @@ from django.views.generic import FormView, DeleteView, UpdateView
 # from polls.forms import RegisterUserForm
 from .forms import *
 from .models import UserAccounts
-
+from chartjs import views as chart_views
 
 # Отображение основной страницы
 def index(request):
@@ -116,8 +116,17 @@ def history_accounts(request, account_id):
     print(trans_list)
     account = UserAccounts.objects.get(pk=account_id)
     transfer_accounts = UserAccounts.objects.filter(nameofuser=account.nameofuser)
+    chart_amount=[0,0,0]
+    for i in trans_list:
+        if i.is_expense:
+            chart_amount[0] += i.amount
+        elif i.is_income:
+            chart_amount[1] += i.amount
+        elif i.is_transfer:
+            chart_amount[2] += i.amount
 
-    return render(request, 'polls/profile/history_accounts.html', {'trans_list': trans_list, 'account': account, 'transfer_accounts':transfer_accounts})
+    return render(request, 'polls/profile/history_accounts.html', {'trans_list': trans_list, 'account': account, 'transfer_accounts':transfer_accounts, 'chart_amount':chart_amount,},)
+
 
 
 def delete_transaction(request, transaction_id):
