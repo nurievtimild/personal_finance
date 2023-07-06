@@ -28,9 +28,23 @@
                         <span class="input-group-text">Категория</span>
 
                          {% if a.category %}
-                            <input type="text" id="category" name="category" value="{{ a.category }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <input type="text" id="category" name="category" list="category_income" value="{{ a.category }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <datalist id="category_income">
+                                  <option>Зарплата</option>
+                                  <option>Подработка</option>
+                                  <option>Стипендия</option>
+                                  <option>Пенсия</option>
+                                  <option>Вернули долг</option>
+                            </datalist>
                          {% else %}
-                            <input type="text" id="category" name="category" value="" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <input type="text" id="category" name="category" list="category_income" value="" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <datalist id="category_income">
+                                  <option>Зарплата</option>
+                                  <option>Подработка</option>
+                                  <option>Стипендия</option>
+                                  <option>Пенсия</option>
+                                  <option>Вернули долг</option>
+                            </datalist>
                          {% endif %}
 
                     </div>
@@ -51,9 +65,21 @@
                      <div class="input-group input-group-lg">
                         <span class="input-group-text">Категория</span>
                          {% if a.category %}
-                            <input type="text" id="category" name="category" value="{{ a.category }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <input type="text" id="category" name="category" list="category_expense" value="{{ a.category }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <datalist id="category_expense">
+                                <option>Продукты</option>
+                                <option>Одежда</option>
+                                <option>Рестораны</option>
+                                <option>Кино</option>
+                            </datalist>
                          {% else %}
-                            <input type="text" id="category" name="category" value="" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <input type="text" id="category" name="category" list="category_expense" value="" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <datalist id="category_expense">
+                                <option>Продукты</option>
+                                <option>Одежда</option>
+                                <option>Рестораны</option>
+                                <option>Кино</option>
+                            </datalist>
                          {% endif %}
                     </div>
                      <div class="input-group input-group-lg">
