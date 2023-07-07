@@ -157,8 +157,8 @@
           <select class="form-select form-select-lg" name="transfer_account_id" aria-label=".form-select-lg example" required>
             <option selected value=''>Выбирите один из ваших счётов</option>
               {% for a in user_accounts %}
-                {% if a.nameofuser_id == user.id%}
-                    {% if a.account_id != each.account_id %}
+                {% if a.nameofuser_id == user.id  %}
+                    {% if a.account_id != each.account_id and not a.is_deleted%}
               <option value="{{ a.account_id }}"> {{a.account_name}}   </option>
                     {% endif %}
                 {% endif %}

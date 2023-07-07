@@ -42,8 +42,6 @@ def profile_view(request):
     if request.method == 'POST':
         form = AddAccountForm(request.POST)
         if form.is_valid():
-            # print(form.cleaned_data)
-            # form.nameofuser = request.user.id
             instance = form.save(commit=False)
             instance.nameofuser = request.user
             instance.account_current_balance = request.POST.get('account_start_balance')
@@ -53,7 +51,7 @@ def profile_view(request):
     acc_quantity = 0
     profile_balance = 0
     for each in user_accounts:
-        if each.nameofuser_id == request.user.id:
+        if each.nameofuser_id == request.user.id and not each.is_deleted:
             acc_quantity += 1
             profile_balance += each.account_current_balance
     return render(request, 'polls/profile/profile.html', {'user_accounts': user_accounts, 'acc_quantity': acc_quantity, 'profile_balance': profile_balance})
@@ -92,7 +90,8 @@ def add_transaction(request, account_id):
 
 def delete_account(request, account_id):
     account = UserAccounts.objects.get(pk=account_id)
-    account.delete()
+    account.is_deleted = True
+    account.save()
     return redirect('profile')
 
 @login_required
@@ -116,14 +115,16 @@ def history_accounts(request, account_id):
     print(trans_list)
     account = UserAccounts.objects.get(pk=account_id)
     transfer_accounts = UserAccounts.objects.filter(nameofuser=account.nameofuser)
-    chart_amount=[0,0,0]
+    chart_amount=[0,0,0,0]
     for i in trans_list:
         if i.is_expense:
             chart_amount[0] += i.amount
         elif i.is_income:
             chart_amount[1] += i.amount
         elif i.is_transfer:
-            chart_amount[2] += i.amount
+            if i.transfer_account_id == account_id:
+                chart_amount[3] += i.amount
+            else: chart_amount[2] += i.amount
 
     return render(request, 'polls/profile/history_accounts.html', {'trans_list': trans_list, 'account': account, 'transfer_accounts':transfer_accounts, 'chart_amount':chart_amount,},)
 
