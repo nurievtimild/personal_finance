@@ -102,7 +102,7 @@
                             {% for i in transfer_accounts %}
                               {% if i.account_id == a.transfer_account_id %}
                                 <option selected value='{{i.account_id}}'>{{i.account_name}}</option>
-                              {% elif i.account_id != account.account_id %}
+                              {% elif i.account_id != account.account_id and not i.is_deleted%}
                                 <option value="{{ i.account_id }}"> {{i.account_name}} </option>
                               {% endif %}
                             {% endfor %}

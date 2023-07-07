@@ -62,10 +62,16 @@
                              {% if a.transfer_account_id == account.account_id %}
 
                                         <td style="color: green">+{{a.amount}}</td>
-
-                                                <td>Перевод со счета:
+                                                 {% if not a.account_id.is_deleted %}
+                                                 <td>Перевод со счета:
                                                     <a href="{% url 'history_accounts' account_id=a.account_id.account_id %}" class="link-danger link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">{{a.account_id.account_name}}</a>
-                                                </td>
+                                                 </td>
+                                                 {% else %}
+                                                 <td>Перевод с удаленного счета: {{a.account_id.account_name}}</td>
+                                                 {% endif %}
+
+
+
 
 
                             {% else %}
@@ -74,9 +80,13 @@
                                         <td style="color: red">-{{a.amount}}</td>
                                         {% for i in transfer_accounts %}
                                             {% if i.account_id == a.transfer_account_id %}
+                                                {% if not i.is_deleted %}
                                                 <td>Перевод на счет:
                                                     <a href="{% url 'history_accounts' account_id=i.account_id %}" class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">{{i.account_name}}</a>
                                                 </td>
+                                                {% else %}
+                                                <td>Перевод на удаленный счет: {{i.account_name}}</td>
+                                                {% endif %}
                                             {% endif %}
                                         {% endfor %}
 
