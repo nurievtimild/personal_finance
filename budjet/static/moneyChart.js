@@ -30,6 +30,3 @@ let pieChart = new Chart(moneyChart, {
   type: 'pie',
   data: moneyData
 });
-
-
-

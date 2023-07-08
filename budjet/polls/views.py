@@ -1,17 +1,14 @@
 import json
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-# from django.template import loader
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, DeleteView, UpdateView
-# from polls.forms import RegisterUserForm
 from .forms import *
 from .models import UserAccounts
-from chartjs import views as chart_views
-import json
+from django.core.exceptions import ValidationError
+# from chartjs import views as chart_views
 
 # Отображение основной страницы
 def index(request):
@@ -35,10 +32,6 @@ def about(request):
     return render(request, "polls/landing/about.html")
 
 
-# def login(request):
-#     return render(request, "polls/landing/login.html")
-
-
 # Отображение профиля со счетами с проверкой входа пользователя
 @login_required
 def profile_view(request):
@@ -57,8 +50,11 @@ def profile_view(request):
         if each.nameofuser_id == request.user.id and not each.is_deleted:
             acc_quantity += 1
             profile_balance += each.account_current_balance
-    return render(request, 'polls/profile/profile.html',
-                  {'user_accounts': user_accounts, 'acc_quantity': acc_quantity, 'profile_balance': profile_balance})
+    return render(request, 'polls/profile/profile.html', {
+        'user_accounts': user_accounts,
+        'acc_quantity': acc_quantity,
+        'profile_balance': profile_balance
+    })
 
 
 @login_required
@@ -169,13 +165,28 @@ def history_accounts(request, account_id):
                 expense_amount[expense_category.index("Переводы")] += float(i.amount)
     expense_category = json.dumps(expense_category)
 
-
+    day_balance_change = []
+    changing_date = set()
+    if len(trans_list) > 1:
+        for i in range(len(trans_list)):
+            if trans_list[i].transaction_date.date() not in changing_date:
+                changing_date.add(trans_list[i].transaction_date.date())
+                day_balance_change.append(trans_list[i].amount)
+                for j in range(i + 1, len(trans_list)):
+                    if trans_list[j].transaction_date.date() == trans_list[i].transaction_date.date():
+                        day_balance_change[i] += trans_list[j].amount
+        for i in range(len(day_balance_change) - 1):
+            day_balance_change[i + 1] += day_balance_change[i]
+        changing_date = list(changing_date)
+    print(changing_date)
+    print(day_balance_change)
 
     return render(request, 'polls/profile/history_accounts.html',
                   {'trans_list': trans_list, 'account': account, 'transfer_accounts': transfer_accounts,
                    'chart_amount': chart_amount, 'income_category': income_category,
                    'income_amount': income_amount,  'expense_category': expense_category,
-                   'expense_amount': expense_amount, }, )
+                   'expense_amount': expense_amount, 'day_money_change': day_balance_change,
+                   'changing_date': changing_date,}, )
 
 
 def delete_transaction(request, transaction_id):
@@ -226,3 +237,14 @@ def edit_transaction(request, transaction_id):
         transaction.save()
         user_account.save()
     return redirect('history_accounts', account_id)
+
+
+@login_required
+def edit_profile(request):
+    user = User.objects.get(username=request.user.username)
+    if request.method == 'POST':
+        user.username = request.POST.get('username')
+        user.save()
+        return redirect('profile')
+    else:
+        return render(request, 'profile.html')
