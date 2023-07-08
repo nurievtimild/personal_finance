@@ -1,17 +1,18 @@
 const data = document.currentScript.dataset;
 let chart_amount = data.chartAmount;
 chart_amount = JSON.parse(chart_amount);
-var moneyChart = document.getElementById("moneyChart");
+let moneyChart = document.getElementById("moneyChart");
 console.log(chart_amount);
 
 Chart.defaults.global.defaultFontFamily = "Lato";
 Chart.defaults.global.defaultFontSize = 18;
 
-var moneyData = {
+let moneyData = {
     labels: [
         "Расход",
         "Доход",
-        "Перевод",
+        "Перевод со счета",
+        "Перевод на счет",
     ],
     datasets: [
         {
@@ -20,11 +21,14 @@ var moneyData = {
                 "#FF6384",
                 "#63FF84",
                 "#611304",
+                "#FBCEB1",
             ]
         }]
 };
 
-var pieChart = new Chart(moneyChart, {
+let pieChart = new Chart(moneyChart, {
   type: 'pie',
   data: moneyData
 });
+
+console.log(moneyData.labels);
