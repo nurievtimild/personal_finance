@@ -18,7 +18,6 @@
        margin: auto
     }
 </style>
-</style>
 
 <body>
     <div class="container mt-5 d-flex justify-content-center w-50 m-auto">
@@ -32,7 +31,7 @@
 
                 <div class="ml-3 w-100">
                     <b class="nav-link active nav" data-bs-toggle="modal" data-bs-target="#EditProfileModal{{user.username}}">
-                        <h4 class="text-center mb-0 mt-0">{{ user.username }}</h4>
+                        <h4 class="col-11 text-center mb-0 mt-0">{{ user.username }}</h4>
                     </b>
                     {% include "polls/profile/edit_profile.html" %}
                     <span class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white">

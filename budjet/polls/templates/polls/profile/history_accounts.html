@@ -7,23 +7,7 @@
 {% block content %}
 
 <div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <canvas id="moneyChart" width="25" height="5"></canvas>
-    <script data-chart-amount="{{ chart_amount }}" src="/static/moneyChart.js"></script>
-    <canvas id="incomeChart" width="25" height="5"></canvas>
-    <script data-income-amount="{{ income_amount }}" data-income-category="{{ income_category }}" src="/static/incomeChart.js"></script>
-    <canvas id="expenseChart" width="25" height="5"></canvas>
-    <script data-expense-amount="{{ expense_amount }}" data-expense-category="{{ expense_category }}" src="/static/expenseChart.js"></script>
-</div>
-
-<div>
-    <canvas id="balance_change" width="300px" height="50px"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script data-day-balance-change="{{ day_balance_change }}" data-changing-date="{{ changing_date }}" src="/static/transactions_graph.js"></script>
-</div>
-
-<div>
-    <div class="text-center">
+    <div class="text-center mt-5">
         <div class="content mb-5">
             <main class="px-3">
                 <h1>Название счета: {{account.account_name}}</h1>
@@ -31,7 +15,7 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="text-center table">
         <thead>
             <tr>
                 <th scope="col">Тип операции</th>
@@ -123,6 +107,18 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
+
+<div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <canvas class="mt-5" id="moneyChart" width="25" height="5"></canvas>
+    <script data-chart-amount="{{ chart_amount }}" src="/static/moneyChart.js"></script>
+    <canvas class="mt-5" id="incomeChart" width="25" height="5"></canvas>
+    <script data-income-amount="{{ income_amount }}" data-income-category="{{ income_category }}" src="/static/incomeChart.js"></script>
+    <canvas class="mt-5" id="expenseChart" width="25" height="5"></canvas>
+    <script data-expense-amount="{{ expense_amount }}" data-expense-category="{{ expense_category }}" src="/static/expenseChart.js"></script>
+    <canvas class="mt-5" id="transactionsChart" width="25" height="5"></canvas>
+    <script data-balance-change="{{ balance_change }}" data-changing-date="{{ changing_date }}" src="/static/transactionsChart.js"></script>
 </div>
 
 {% endblock %}

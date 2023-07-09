@@ -1,14 +1,12 @@
 import json
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy, reverse
-from django.views.generic import FormView, DeleteView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import FormView
 from .forms import *
 from .models import UserAccounts
 from django.core.exceptions import ValidationError
-# from chartjs import views as chart_views
+
 
 # Отображение основной страницы
 def index(request):
@@ -125,9 +123,9 @@ def history_accounts(request, account_id):
         elif i.is_income:
             chart_amount[1] += i.amount
         elif i.is_transfer and i.transfer_account_id == account_id:
-                chart_amount[3] += i.amount
+            chart_amount[3] += i.amount
         elif i.is_transfer and i.account_id.account_id == account_id:
-                chart_amount[2] += i.amount
+            chart_amount[2] += i.amount
 
     income_amount = []
     income_category = []
@@ -165,28 +163,30 @@ def history_accounts(request, account_id):
                 expense_amount[expense_category.index("Переводы")] += float(i.amount)
     expense_category = json.dumps(expense_category)
 
-    day_balance_change = []
+    balance_change = []
     changing_date = set()
+    trans_list = trans_list.order_by('transaction_date')
     if len(trans_list) > 1:
         for i in range(len(trans_list)):
             if trans_list[i].transaction_date.date() not in changing_date:
                 changing_date.add(trans_list[i].transaction_date.date())
-                day_balance_change.append(trans_list[i].amount)
+                balance_change.append(trans_list[i].amount)
                 for j in range(i + 1, len(trans_list)):
                     if trans_list[j].transaction_date.date() == trans_list[i].transaction_date.date():
-                        day_balance_change[i] += trans_list[j].amount
-        for i in range(len(day_balance_change) - 1):
-            day_balance_change[i + 1] += day_balance_change[i]
-        changing_date = list(changing_date)
-    print(changing_date)
-    print(day_balance_change)
+                        balance_change[i] += trans_list[j].amount
+        for i in range(len(balance_change) - 1):
+            balance_change[i + 1] += balance_change[i]
+        changing_date = sorted(list(changing_date))
+        for i in range(len(changing_date)):
+            changing_date[i] = changing_date[i].strftime('%d/%m/%y')
+    changing_date = json.dumps(changing_date)
 
     return render(request, 'polls/profile/history_accounts.html',
                   {'trans_list': trans_list, 'account': account, 'transfer_accounts': transfer_accounts,
                    'chart_amount': chart_amount, 'income_category': income_category,
                    'income_amount': income_amount,  'expense_category': expense_category,
-                   'expense_amount': expense_amount, 'day_money_change': day_balance_change,
-                   'changing_date': changing_date,}, )
+                   'expense_amount': expense_amount, 'balance_change': balance_change,
+                   'changing_date': changing_date, }, )
 
 
 def delete_transaction(request, transaction_id):
