@@ -179,7 +179,7 @@ def history_accounts(request, account_id):
         changing_date = sorted(list(changing_date))
         for i in range(len(changing_date)):
             changing_date[i] = changing_date[i].strftime('%d/%m/%y')
-    changing_date = json.dumps(changing_date)
+        changing_date = json.dumps(changing_date)
 
     return render(request, 'polls/profile/history_accounts.html',
                   {'trans_list': trans_list, 'account': account, 'transfer_accounts': transfer_accounts,
